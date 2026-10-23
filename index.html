@@ -8,13 +8,13 @@
 </head>
 <body>
 <div class="login-container">
-    <form action="" class="form-login">
+    <form action="productcard.html" class="form-login">
         <ul class="login-nav">
             <li class="login-nav__item active">
-                <a href="#">Sign In</a>
+                <a href="#" id="tab-sign-in">Sign In</a>
             </li>
             <li class="login-nav__item">
-                <a href="#">Sign Up</a>
+                <a href="#" id="tab-sign-up">Sign Up</a>
             </li>
         </ul>
         <label for="login-input-user" class="login__label">
@@ -25,13 +25,55 @@
             Password
         </label>
         <input type="password" id="login-input-password" class="login__input">
+        <!-- Campos que solo se ven en Sign Up -->
+        <div id="sign-up-fields" class="login__signup-fields" hidden>
+            <label for="login-input-email" class="login__label">
+                Email
+            </label>
+            <input type="email" id="login-input-email" class="login__input">
+            <label for="login-input-confirm" class="login__label">
+                Confirm Password
+            </label>
+            <input type="password" id="login-input-confirm" class="login__input">
+        </div>
         <label for="login-sign-up" class="login__label--checkbox">
             <input type="checkbox" id="login-sign-up" class="login__input--checkbox" />
             Keep me Signed in
         </label>
-        <button class="login_submit" disabled>Sign in</button>
+        <button type="submit" id="login-submit" class="login_submit">Sign in</button>
     </form>
     <a href="#" class="login__forgot">Forgot Password?</a>
-</div>  
+</div>
+<script>
+    const tabSignIn = document.getElementById('tab-sign-in');
+    const tabSignUp = document.getElementById('tab-sign-up');
+    const signUpFields = document.getElementById('sign-up-fields');
+    const submitButton = document.getElementById('login-submit');
+    const form = document.querySelector('.form-login');
+    let isSignUp = false;
+
+    // Cambia entre Sign In y Sign Up
+    function showTab(signUp) {
+        isSignUp = signUp;
+        signUpFields.hidden = !signUp;
+        submitButton.textContent = signUp ? 'Sign up' : 'Sign in';
+        tabSignIn.parentElement.classList.toggle('active', !signUp);
+        tabSignUp.parentElement.classList.toggle('active', signUp);
+    }
+
+    tabSignIn.addEventListener('click', (e) => { e.preventDefault(); showTab(false); });
+    tabSignUp.addEventListener('click', (e) => { e.preventDefault(); showTab(true); });
+
+    // En Sign Up, las dos contraseñas deben coincidir
+    form.addEventListener('submit', (e) => {
+        const password = document.getElementById('login-input-password').value;
+        const confirm = document.getElementById('login-input-confirm').value;
+        if (isSignUp && password !== confirm) {
+            e.preventDefault();
+            alert('Las contraseñas no coinciden');
+        }
+    });
+</script>
+
 </body>
 </html>

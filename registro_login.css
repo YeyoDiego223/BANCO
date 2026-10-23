@@ -146,6 +146,10 @@ body {
     margin-top: 1.5rem;
 }
 
+.login__signup-fields {
+    margin-top: 1.5rem;
+}
+
 .login__input--checkbox {
     position: absolute;
     top: .1rem;
